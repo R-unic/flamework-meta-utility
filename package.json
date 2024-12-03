@@ -1,0 +1,42 @@
+{
+  "name": "@rbxts/flamework-meta-utils",
+  "version": "1.0.0",
+  "main": "out/init.lua",
+  "scripts": {
+    "build": "rbxtsc",
+    "watch": "rbxtsc -w",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "url": "git+https://github.com/R-unic/flamework-meta-utility.git"
+  },
+  "keywords": [
+    "roblox",
+    "rbxts",
+    "flamework",
+    "meta",
+    "metadata",
+    "utility"
+  ],
+  "author": "runicly",
+  "license": "ISC",
+  "description": "Metadata utility for Flamework",
+  "types": "out/index.d.ts",
+  "files": [
+    "out",
+    "!**/*.tsbuildinfo"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@rbxts/compiler-types": "^3.0.0-types.0",
+    "@rbxts/types": "^1.0.813",
+    "roblox-ts": "^3.0.0",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@flamework/components": "^1.2.3",
+    "@flamework/core": "^1.2.3"
+  }
+}
