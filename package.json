@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@flamework/components": "^1.2.3",
-    "@flamework/core": "^1.2.3"
+    "@flamework/core": "^1.2.3",
+    "@rbxts/t": "^3.2.1"
   }
 }
