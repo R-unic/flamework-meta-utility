@@ -30,7 +30,8 @@ export function getInstanceAtPath<T extends string>(path: T, _meta?: Modding.Int
 }
 
 /**
- * Macro that generates a type guard (if one is not specified) then if the guard passes, returns the casted value
+ * Macro that generates a type guard (if one is not specified) and if the guard passes, returns the casted value.
+ * Otherwise returns undefined.
  *
  * @metadata macro
  */
@@ -40,32 +41,31 @@ export function safeCast<T>(value: unknown, guard?: t.check<T> | Modding.Generic
     : undefined;
 }
 
-/** Resolves all dependencies behind the `ctor` constructor */
-export function resolveDependency<T extends object = object>(ctor: Constructor<T>): T | T[] {
-  try {
-    return Modding.resolveSingleton<T>(ctor);
-  } catch (e) {
-    const components = Dependency<Components>().getAllComponents(getIdFromSpecifier(ctor as Constructor));
-    return components as T[];
-  }
+/** Takes a constructor and resolves it and all of it's dependencies */
+export function resolveDependencies<T extends object = object>(ctor: Constructor<T>): T[] {
+  const isComponent = Reflect.hasMetadata(ctor, "intrinsic-component-decorator");
+  if (!isComponent)
+    return [Modding.resolveSingleton<T>(ctor)];
+
+  const components = Dependency<Components>().getAllComponents(getIdFromSpecifier(ctor as Constructor));
+  return components as T[];
 }
 
 /** Calls `process` for every dependency resolved from `ctor` */
-export function processDependency<T extends object = object, O = void>(ctor: Constructor<T>, process: (dependency: T) => O): O {
-  const dependencies = resolveDependency<T>(ctor);
-  const isArray = (dependencies as T[]).size() > 0;
-  if (isArray) {
-    let lastResult: O;
-    for (const component of dependencies as T[])
-      lastResult = process(component);
+export function processDependencies<T extends object = object, O = void>(ctor: Constructor<T>, process: (dependency: T) => O): O extends void ? void : O[] {
+  const dependencies = resolveDependencies<T>(ctor);
+  const results: O[] = [];
+  for (const component of dependencies)
+    (results as defined[]).push(process(component)!);
 
-    return lastResult!;
-  }
-
-  return process(dependencies as T);
+  return results as O extends void ? void : O[];
 }
 
 /** Calls the descriptor method for every dependency resolved from `ctor` */
-export function callMethodOnDependency<Args extends unknown[], O = void>(ctor: object, descriptor: TypedPropertyDescriptor<(this: unknown, ...args: Args) => O>, ...args: Args): O {
-  return processDependency(ctor as Constructor, dependency => descriptor.value(dependency, ...args))
+export function callMethodOnDependencies<Args extends unknown[], O = void>(
+  ctor: object,
+  descriptor: TypedPropertyDescriptor<(this: unknown, ...args: Args) => O>,
+  ...args: Args
+): O extends void ? void : O[] {
+  return processDependencies(ctor as Constructor, dependency => descriptor.value(dependency, ...args));
 }
