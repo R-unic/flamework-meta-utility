@@ -1,7 +1,24 @@
 # @rbxts/flamework-meta-utils
 Metadata utility for Flamework
 
-## Methods
+## Macros
+
+### getChildrenOfType&lt;T&gt;()
+Generates a type guard (if one is not specified) and returns all children of the given instance that pass the guard.
+```ts
+interface CharacterModel extends Model {
+  Humanoid: Humanoid;
+  HumanoidRootPart: Part;
+}
+
+const characters = getChildrenOfType<CharacterModel>(Workspace.Characters);
+```
+
+### getDescendantsOfType&lt;T&gt;()
+Generates a type guard (if one is not specified) and returns all descendants of the given instance that pass the guard.
+```ts
+const assetsToPreload = getDescendantsOfType<Decal | Texture | MeshPart>(ReplicatedStorage);
+```
 
 ### getInstanceAtPath()
 Resolves the instance at the given path using Rojo
@@ -10,19 +27,25 @@ const mouseControllerModule = getInstanceAtPath("src/client/controllers/mouse.ts
 ```
 
 ### safeCast&lt;T&gt;()
-Macro that generates a type guard (if one is not specified) and if the guard passes, returns the casted value. Otherwise returns undefined.
+Generates a type guard (if one is not specified) and if the guard passes, returns the casted value. Otherwise returns undefined.
 ```ts
 const value = safeCast<number>(someUnknownValue);
 if (value !== undefined)
   print("doubled value:", value * 2)
 ```
-
 ```ts
+interface CharacterModel extends Model {
+  Humanoid: Humanoid;
+  HumanoidRootPart: Part;
+}
+
 const character = safeCast<CharacterModel>(Players.LocalPlayer.Character);
 if (character !== undefined)
   print("character root:", character.HumanoidRootPart)
 ```
+## Methods
 
+These next three methods are generally used in combination with decorators.
 ### resolveDependencies()
 Takes a constructor and resolves it and all of it's dependencies
 

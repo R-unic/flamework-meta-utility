@@ -8,8 +8,22 @@ import { t } from "@rbxts/t";
 export const getName = (object: object) => (Reflect.getMetadatas(object, "identifier")[0] as string)?.split("@")[1]
   ?? tostring(getmetatable(object));
 
+/** @metadata macro */
+export function getChildrenOfType<T extends Instance>(
+  instance: Instance,
+  guard: t.check<T> | Modding.Generic<T, "guard"> = (v): v is T => false
+): T[] {
+  return instance.GetChildren().filter(guard);
+}
 
-/** @hidden */
+/** @metadata macro */
+export function getDescendantsOfType<T extends Instance>(
+  instance: Instance,
+  guard: t.check<T> | Modding.Generic<T, "guard"> = (v): v is T => false
+): T[] {
+  return instance.GetDescendants().filter(guard);
+}
+
 function _getInstanceAtPath([paths]: string[][]): Instance | undefined {
   let instance: Instance | undefined = game;
   for (const path of paths) {
@@ -25,7 +39,7 @@ function _getInstanceAtPath([paths]: string[][]): Instance | undefined {
  *
  * @metadata macro intrinsic-arg-shift
  */
-export function getInstanceAtPath<T extends string>(path: T, _meta?: Modding.Intrinsic<"path", [T]>): Instance | undefined {
+export function getInstanceAtPath<Path extends string>(path: Path, _meta?: Modding.Intrinsic<"path", [Path]>): Instance | undefined {
   return _getInstanceAtPath(path as unknown as string[][]);
 }
 
