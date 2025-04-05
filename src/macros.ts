@@ -1,5 +1,15 @@
 import type { Modding } from "@flamework/core";
 import type { t } from "@rbxts/t";
+import type { String, List } from "ts-toolbelt"
+
+/** @metadata macro {@link result intrinsic-inline} */
+export function repeatString<S extends string, N extends number>(
+  s?: S | Modding.Many<S>,
+  n?: N | Modding.Many<N>,
+  result?: Modding.Many<String.Join<List.Repeat<S, N>>>
+): string {
+  return undefined!;
+}
 
 /** @metadata macro */
 export function getChildrenOfType<T extends Instance>(
