@@ -2,58 +2,12 @@ import { Dependency, Modding, Reflect } from "@flamework/core";
 import { getIdFromSpecifier } from "@flamework/components/out/utility";
 import type { Constructor } from "@flamework/core/out/utility";
 import type { Components } from "@flamework/components";
-import { t } from "@rbxts/t";
+
+export * from "./macros"
 
 /** Gets the Flamework associated identifier or if not found, the class' `toString()` value */
 export const getName = (object: object) => (Reflect.getMetadatas(object, "identifier")[0] as string)?.split("@")[1]
   ?? tostring(getmetatable(object));
-
-/** @metadata macro */
-export function getChildrenOfType<T extends Instance>(
-  instance: Instance,
-  guard: t.check<T> | Modding.Generic<T, "guard"> = (v): v is T => false
-): T[] {
-  return instance.GetChildren().filter(guard);
-}
-
-/** @metadata macro */
-export function getDescendantsOfType<T extends Instance>(
-  instance: Instance,
-  guard: t.check<T> | Modding.Generic<T, "guard"> = (v): v is T => false
-): T[] {
-  return instance.GetDescendants().filter(guard);
-}
-
-function _getInstanceAtPath([paths]: string[][]): Instance | undefined {
-  let instance: Instance | undefined = game;
-  for (const path of paths) {
-    if (instance === undefined) break;
-    instance = instance.FindFirstChild(path);
-  }
-
-  return instance;
-}
-
-/**
- * Resolves the instance at the given path using Rojo
- *
- * @metadata macro intrinsic-arg-shift
- */
-export function getInstanceAtPath<Path extends string>(path: Path, _meta?: Modding.Intrinsic<"path", [Path]>): Instance | undefined {
-  return _getInstanceAtPath(path as unknown as string[][]);
-}
-
-/**
- * Macro that generates a type guard (if one is not specified) and if the guard passes, returns the casted value.
- * Otherwise returns undefined.
- *
- * @metadata macro
- */
-export function safeCast<T>(value: unknown, guard?: t.check<T> | Modding.Generic<T, "guard">): T | undefined {
-  return guard !== undefined ?
-    (guard(value) ? value : undefined)
-    : undefined;
-}
 
 /** Takes a constructor and resolves it and all of it's dependencies */
 export function resolveDependencies<T extends object = object>(ctor: Constructor<T>): T[] {
