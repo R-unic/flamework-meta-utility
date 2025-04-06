@@ -3,6 +3,17 @@ Metadata utility for Flamework
 
 ## Macros
 
+### repeatString&lt;S, N&gt;()
+Repeats the string `S` `N` times.
+```ts
+const line = repeatString<"-", 30>();
+```
+
+Compiles to
+```lua
+local line = "------------------------------";
+```
+
 ### getChildrenOfType&lt;T&gt;()
 Generates a type guard (if one is not specified) and returns all children of the given instance that pass the guard.
 ```ts
