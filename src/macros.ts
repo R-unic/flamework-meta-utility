@@ -2,7 +2,7 @@ import type { Modding } from "@flamework/core";
 import type { t } from "@rbxts/t";
 import type { String, List } from "ts-toolbelt"
 
-/** @metadata macro {@link result intrinsic-inline} */
+/** @metadata macro */
 export function deunify<T>(result?: Modding.Many<T[]>): T[] {
   return result ?? [];
 }
