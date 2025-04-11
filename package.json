@@ -1,6 +1,6 @@
 {
   "name": "@rbxts/flamework-meta-utils",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "out/init.lua",
   "scripts": {
     "build": "rbxtsc",
@@ -20,7 +20,7 @@
   ],
   "author": "runicly",
   "license": "ISC",
-  "description": "Metadata utility for Flamework",
+  "description": "Metadata utility and utility macros for Flamework",
   "types": "out/index.d.ts",
   "files": [
     "out",

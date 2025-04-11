@@ -3,13 +3,16 @@ import type { t } from "@rbxts/t";
 import type { String, List } from "ts-toolbelt"
 
 /** @metadata macro {@link result intrinsic-inline} */
-export function repeatString<S extends string, N extends number>(
+export function deunify<T>(result?: Modding.Many<T[]>): T[] {
+  return result ?? [];
+}
+
+/** @metadata macro {@link result intrinsic-inline} */
+export declare function repeatString<S extends string, N extends number>(
   s?: S | Modding.Many<S>,
   n?: N | Modding.Many<N>,
   result?: Modding.Many<String.Join<List.Repeat<S, N>>>
-): string {
-  return undefined!;
-}
+): string;
 
 /** @metadata macro */
 export function getChildrenOfType<T extends Instance>(
