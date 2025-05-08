@@ -6,12 +6,12 @@ Metadata utility and utility macros for Flamework
 ### deunify&lt;T&gt;()
 Deunifies a union type `T` into an array of all constituents
 ```ts
-const constituents = deunify<"a", "b", "c">();
+const constituents = deunify<"a" | "b" | "c">();
 ```
 
 Compiles to
 ```lua
-local constituents = deunify({"a", "b", "c"}) -- which returns the passed param;
+local constituents = deunify({"a", "b", "c"}) -- which returns the passed param
 ```
 
 ### repeatString&lt;S, N&gt;()
