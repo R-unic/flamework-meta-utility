@@ -1,6 +1,14 @@
 import type { Modding } from "@flamework/core";
 import type { t } from "@rbxts/t";
-import type { String, List } from "ts-toolbelt"
+import type { String, List } from "ts-toolbelt";
+
+/** @metadata macro */
+export function identity<T>(meta?: Modding.Many<T>): T {
+  return meta as never;
+}
+
+/** @metadata macro {@link meta intrinsic-inline} */
+export declare function enumKey<E, V>(meta?: Modding.Many<{ [K in keyof E]: E[K] extends V ? K : never }[keyof E]>): string;
 
 /** @metadata macro */
 export function deunify<T>(result?: Modding.Many<T[]>): T[] {
@@ -56,7 +64,7 @@ export function getInstanceAtPath<Path extends string>(path: Path, _meta?: Moddi
  * @metadata macro
  */
 export function safeCast<T>(value: unknown, guard?: t.check<T> | Modding.Generic<T, "guard">): T | undefined {
-  return guard !== undefined ?
-    (guard(value) ? value : undefined)
+  return guard !== undefined
+    ? (guard(value) ? value : undefined)
     : undefined;
 }
