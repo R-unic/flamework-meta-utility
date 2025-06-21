@@ -43,7 +43,7 @@ local obj = identity({ foo = "bar" }); -- which returns the passed param
 Deunifies a union type `T` into an array of all constituents
 
 ```ts
-const constituents = deunify<"a", "b", "c">();
+const constituents = deunify<"a" | "b" | "c">();
 ```
 
 Compiles to
@@ -129,5 +129,11 @@ Takes a constructor and resolves it and all of it's dependencies
 Calls the provided method for each dependency resolved from the provided constructor
 
 ### callMethodOnDependencies()
+
+<<<<<<< HEAD
+
+=======
+
+>>>>>>> bf05d65fca65b4da086b94b272759f741a50e5d5
 
 Calls the method from the provided method descriptor for each dependency resolved from the provided constructor
