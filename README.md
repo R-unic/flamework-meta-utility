@@ -24,20 +24,6 @@ Compiles to
 local a = "A";
 ```
 
-### identity&lt; T&gt; ()
-
-Converts the type into a runtime value.
-
-```ts
-const obj = identity<{ foo: "bar" }>();
-```
-
-Compiles to
-
-```lua
-local obj = identity({ foo = "bar" }); -- which returns the passed param
-```
-
 ### deunify&lt; T&gt; ()
 
 Deunifies a union type `T` into an array of all constituents
@@ -129,11 +115,5 @@ Takes a constructor and resolves it and all of it's dependencies
 Calls the provided method for each dependency resolved from the provided constructor
 
 ### callMethodOnDependencies()
-
-<<<<<<< HEAD
-
-=======
-
->>>>>>> bf05d65fca65b4da086b94b272759f741a50e5d5
 
 Calls the method from the provided method descriptor for each dependency resolved from the provided constructor

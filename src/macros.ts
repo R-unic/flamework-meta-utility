@@ -2,11 +2,6 @@ import type { Modding } from "@flamework/core";
 import type { t } from "@rbxts/t";
 import type { String, List } from "ts-toolbelt";
 
-/** @metadata macro */
-export function identity<T>(meta?: Modding.Many<T>): T {
-  return meta as never;
-}
-
 /** @metadata macro {@link meta intrinsic-inline} */
 export declare function enumKey<E, V>(meta?: Modding.Many<{ [K in keyof E]: E[K] extends V ? K : never }[keyof E]>): string;
 
